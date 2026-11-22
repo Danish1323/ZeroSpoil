@@ -1,0 +1,99 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Premium Soft Sage Gradient Background */
+  --bg-gradient: linear-gradient(135deg, #f5f5ef 0%, #f0f3eb 50%, #eef0e8 100%);
+  --bg: #eef0e8;
+  --white: #ffffff;
+
+  /* Primary Deep Forest Green */
+  --green-dark: #0f2d1a;
+  --green-mid: #164225;
+
+  /* Gradient replacement for formerly flat dark green blocks */
+  --green-gradient-hero: linear-gradient(135deg, #0f2d1a 0%, #164225 60%, #1c522e 100%);
+  --green-gradient-card: linear-gradient(145deg, #11331e 0%, #0f2d1a 100%);
+
+  /* Accent Green */
+  --green-accent: #25a244;
+  --green-text: #25a244;
+
+  /* Button Light Shades & Gradients */
+  --btn-gradient-light: linear-gradient(180deg, #eaf2e5 0%, #d8e5d1 100%);
+  --btn-gradient-light-hover: linear-gradient(180deg, #f0f7ec 0%, #e0eed9 100%);
+  --btn-light-border: #b8cbb0;
+  --btn-light-text: #0f2d1a;
+
+  /* Action Button Subtle Green Gradient */
+  --btn-action-gradient: linear-gradient(135deg, #25a244 0%, #1f8a39 100%);
+  --btn-action-hover: linear-gradient(135deg, #2bc051 0%, #22993f 100%);
+
+  /* High-Contrast Bold Typography */
+  --text-primary: #0d0d0d;
+  --text-secondary: #4a4a4a;
+  --text-muted: #717171;
+
+  /* 2px solid warmer border */
+  --border: #c8cfc4;
+  --border-bold: #c8cfc4;
+
+  /* Alert Colors */
+  --red-bg: #fff0f0;
+  --red-text: #c0392b;
+  --red-border: #f5c6c6;
+  --yellow-bg: #fffbf0;
+  --yellow-border: #f0e0a0;
+  --yellow-text: #8a6a00;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  /* Stronger Green-Tinted Shadows */
+  --shadow: 0 3px 10px rgba(15, 45, 26, 0.10), 0 1px 4px rgba(15, 45, 26, 0.06);
+  --shadow-md: 0 8px 24px rgba(15, 45, 26, 0.15);
+  --shadow-lg: 0 14px 38px rgba(15, 45, 26, 0.22);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--text-primary);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  outline: none;
+  transition: all 0.15s ease-in-out;
+}
+
+button:hover {
+  filter: brightness(1.04);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+input, textarea, select {
+  font-family: inherit;
+  outline: none;
+  color: var(--text-primary);
+  background: #ffffff;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}

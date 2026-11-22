@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZeroSpoil — Command Center & Safety Rails</title>
+  <link rel="stylesheet" href="/static/zerospoil/app.css">
+</head>
+<body>
+  <!-- Top Navigation & Global Controls -->
+  <header class="top-navbar">
+    <div class="brand">
+      <div class="brand-title">ZeroSpoil Command Center</div>
+      <span class="badge badge-live">Live Engine &bull; Port 8000</span>
+    </div>
+    <div class="nav-actions">
+      <!-- Geofence User Location Simulator & Real Browser GPS -->
+      <div style="display: flex; align-items: center; gap: 8px; background: #0f172a; padding: 4px 10px; border-radius: 8px; border: 1px solid var(--border-color);">
+        <span style="font-size: 11px; color: var(--text-muted); font-weight: 600;">MY LOCATION:</span>
+        <button id="gps-btn" class="btn" onclick="requestLiveGPS()" style="padding: 3px 8px; font-size: 11px; background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #059669;" title="Get real browser GPS coordinates">&#128225; Use Live GPS</button>
+        <select id="user-location-selector" onchange="updateUserDistance(this.value)" style="background: transparent; color: #38bdf8; border: none; font-size: 12px; font-weight: 600; cursor: pointer; outline: none;">
+          <option value="1.2">📍 Sector 19 (1.2 km away - Nearby)</option>
+          <option value="2.1">📍 Khanda Colony (2.1 km away - Nearby)</option>
+          <option value="6.5">🚫 Vashi Navi Mumbai (6.5 km away - Far away)</option>
+        </select>
+        <span id="live-coords-tag" style="display: none; font-size: 11px; color: #a7f3d0; background: rgba(5, 150, 105, 0.3); padding: 2px 6px; border-radius: 4px; font-family: monospace;"></span>
+      </div>
+      <button class="btn btn-secondary" onclick="resetDemo()">&#8635; Reset Demo</button>
+      <button class="btn btn-primary" onclick="triggerPosAudit()">&#9658; Run POS Audit Now</button>
+    </div>
+  </header>
+
+  <!-- Persistent KPI Ribbon -->
+  <section class="kpi-ribbon">
+    <div class="kpi-card">
+      <div class="kpi-label">Manual Minutes Saved</div>
+      <div class="kpi-value" id="kpi-time">85 m</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Merchant Cash Recovered</div>
+      <div class="kpi-value" id="kpi-cash">&#8377;0.00</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Meals Rescued (NGO)</div>
+      <div class="kpi-value" id="kpi-meals">0</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">CO&#8322;e Diverted</div>
+      <div class="kpi-value" id="kpi-co2">0.0 kg</div>
+    </div>
+  </section>
+
+  <!-- Main Tabs -->
+  <nav class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('tab-rails', this)">Agent Brain &amp; Safety Rails</button>
+    <button class="tab-btn" onclick="switchTab('tab-whatsapp', this)">Vendor WhatsApp Studio</button>
+    <button class="tab-btn" onclick="switchTab('tab-deals', this)">Hyperlocal Community &amp; NGO App</button>
+  </nav>
+
+  <main class="main-content">
+    <!-- Tab 1: Safety Rails & Execution -->
+    <div id="tab-rails" class="tab-pane active">
+      <div class="grid-2col">
+        <!-- Left: Interceptions & HITL Queue -->
+        <div class="panel">
+          <div class="panel-title">
+            <span>Safety Interceptions &amp; HITL Approval Queue</span>
+            <span id="hitl-count" class="badge badge-live">0 Pending</span>
+          </div>
+          <div id="hitl-list">
+            <p style="color: var(--text-muted); font-size: 13px;">No pending human-in-the-loop approvals.</p>
+          </div>
+        </div>
+
+        <!-- Right: Real-time Tool Execution Logs -->
+        <div class="panel">
+          <div class="panel-title">
+            <span>Real-Time Policy &amp; Tool Execution Trace</span>
+          </div>
+          <div id="audit-trace-list" style="max-height: 520px; overflow-y: auto;">
+            <p style="color: var(--text-muted); font-size: 13px;">Awaiting audit execution or vendor ingest...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 2: WhatsApp Business Simulator -->
+    <div id="tab-whatsapp" class="tab-pane">
+      <div class="chat-simulator">
+        <div class="chat-header">
+          <div style="width: 36px; height: 36px; background: #00a884; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white;">ZS</div>
+          <div>
+            <div style="font-size: 14px;">ZeroSpoil WhatsApp Gateway</div>
+            <div style="font-size: 11px; color: #8696a0;">Online &bull; Automated Ingest Engine</div>
+          </div>
+        </div>
+
+        <div class="chat-presets">
+          <div style="font-size: 11px; color: #8696a0; text-transform: uppercase; font-weight: 600;">1-Click Quick Demo Presets:</div>
+          <button class="preset-chip" onclick="applyPreset(1)">
+            <strong>&#127838; Bakery Voice Note (Hindi/English):</strong> 15 sourdough loaves &amp; 20 masala puffs at 50% off
+          </button>
+          <button class="preset-chip" onclick="applyPreset(2)">
+            <strong>&#127822; Fruit Stall Clearance:</strong> Raju Fruit Stall: 12 kg ripe Alphonso mangoes &amp; bananas &#8377;60/kg
+          </button>
+          <button class="preset-chip" onclick="applyPreset(3)">
+            <strong>&#9888;&#65039; Restaurant 5-Hr Unchilled Gravy Trap:</strong> SpiceRoute: 5h unchilled paneer gravy (FSSAI Lock)
+          </button>
+        </div>
+
+        <form id="wa-form" class="chat-input-area" onsubmit="submitWhatsApp(event)">
+          <div style="display: flex; gap: 10px;">
+            <input type="text" id="wa-merchant" placeholder="Merchant Name" value="OvenFresh Bakery" style="flex: 1; padding: 8px; background: #2a3942; border: 1px solid #3b4a54; border-radius: 6px; color: #fff; font-size: 13px;">
+            <select id="wa-type" style="padding: 8px; background: #2a3942; border: 1px solid #3b4a54; border-radius: 6px; color: #fff; font-size: 13px;">
+              <option value="BAKERY">BAKERY</option>
+              <option value="RESTAURANT">RESTAURANT</option>
+              <option value="VENDOR">VENDOR</option>
+              <option value="SUPERMARKET">SUPERMARKET</option>
+            </select>
+          </div>
+
+          <!-- Live Mic Voice Note & Photo Upload Bar -->
+          <div style="display: flex; gap: 10px; align-items: center; background: #202c33; padding: 8px 12px; border-radius: 8px; border: 1px dashed #3b4a54;">
+            <!-- Real Browser Mic Recording -->
+            <button type="button" id="record-btn" onclick="toggleAudioRecording()" class="btn" style="background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); font-size: 12px;">
+              &#127908; Record Voice Note
+            </button>
+            <span id="record-status" style="font-size: 11px; color: #8696a0;">Click to speak (Hindi/English)</span>
+
+            <!-- Photo Attachment -->
+            <div style="margin-left: auto; display: flex; align-items: center; gap: 6px;">
+              <label for="wa-image" style="cursor: pointer; font-size: 12px; color: #38bdf8; display: flex; align-items: center; gap: 4px; background: rgba(56, 189, 248, 0.15); padding: 5px 10px; border-radius: 6px; border: 1px solid rgba(56, 189, 248, 0.3);">
+                &#128247; Attach Food Photo
+              </label>
+              <input type="file" id="wa-image" accept="image/*" onchange="previewSelectedImage(this)" style="display: none;">
+              <span id="image-name-badge" style="display: none; font-size: 11px; color: #34d399; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></span>
+            </div>
+          </div>
+
+          <!-- Optional Audio Upload -->
+          <input type="file" id="wa-audio-file" accept="audio/*" style="display: none;">
+
+          <!-- Image Preview Thumbnail (Hidden initially) -->
+          <div id="image-preview-container" style="display: none; margin-top: 4px; position: relative; width: 80px; height: 80px; border-radius: 6px; overflow: hidden; border: 1px solid #3b4a54;">
+            <img id="image-preview" src="" style="width: 100%; height: 100%; object-fit: cover;">
+            <button type="button" onclick="clearSelectedImage()" style="position: absolute; top: 2px; right: 2px; background: rgba(0,0,0,0.7); color: #fff; border: none; border-radius: 50%; width: 18px; height: 18px; font-size: 10px; cursor: pointer;">&times;</button>
+          </div>
+
+          <textarea id="wa-text" class="chat-textarea" placeholder="Type WhatsApp message or record voice note above..."></textarea>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 12px; color: #8696a0;">Supported: Voice Note, Food Photo, or Text</span>
+            <button type="submit" id="wa-submit-btn" class="btn btn-success" style="background-color: #00a884;">&#10148; Send via WhatsApp</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Tab 3: Hyperlocal Community & NGO Deals -->
+    <div id="tab-deals" class="tab-pane">
+      <div style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+        <h3 style="font-size: 18px;">Active Hyperlocal Rescue Feed</h3>
+        <span style="color: var(--text-muted); font-size: 13px;">Synced live with Supermarket POS &amp; Local Vendors</span>
+      </div>
+      <div id="deals-container" class="deals-grid">
+        <p style="color: var(--text-muted); font-size: 13px;">Loading live deals...</p>
+      </div>
+    </div>
+  </main>
+
+  <script src="/static/zerospoil/app.js"></script>
+  <div id="toast-container" class="toast-container"></div>
+</body>
+</html>
